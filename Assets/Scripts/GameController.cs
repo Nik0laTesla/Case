@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameController : MonoBehaviour
     public string TagGround;
     public string TagFlipCounter;
     public string TagFinishTrigger;
+
+    [SerializeField] private List<Transform> AllDrivers = new List<Transform>();
 
 
     UIController UI;
@@ -59,13 +62,14 @@ public class GameController : MonoBehaviour
         isLevelStart = true;
         UI.isLevelStart = true;
         Camera.isLevelStart = true;
+        AllDrivers.Add(DC.gameObject.transform);
 
 		for (int i=0;i<AIM.AllAI.Count;i++)
 		{
             AIM.AllAI[i].GetComponent<AIController>().isLevelStart = true;
+            AllDrivers.Add(AIM.AllAI[i].transform);
 		}
-
-       // Player.StartRunAnim();
+        // Player.StartRunAnim();
     }
 
     public void LevelFailActions()
@@ -95,4 +99,9 @@ public class GameController : MonoBehaviour
         UI.isLevelDone = true;
         DC.isLevelStart = false;
     }
+
+  
+   
+
+  
 }

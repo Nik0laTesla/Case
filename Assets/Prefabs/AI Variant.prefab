@@ -16,9 +16,15 @@ MonoBehaviour:
   isLevelDone: 0
   isLevelFail: 0
   isOnGround: 0
-  isAccelerating: 0
+  isLanding: 0
   isFlipping: 0
   isBoostActive: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  smoke: {fileID: 398896303277848994}
+  boostParticle: {fileID: 5562054144202438348}
+  Driver: {fileID: 0}
   WC:
   - {fileID: 2306086005476463718}
   - {fileID: 2306086004666854885}
@@ -37,7 +43,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7962774586343761629, guid: 4933194aef112944baebe3933618b6e0, type: 3}
       propertyPath: m_Name
-      value: AI
+      value: AI Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7962774586343761629, guid: 4933194aef112944baebe3933618b6e0, type: 3}
       propertyPath: m_TagString
@@ -157,5 +163,15 @@ WheelCollider:
 --- !u!1 &2306086004082490995 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7964010121825342839, guid: 4933194aef112944baebe3933618b6e0, type: 3}
+  m_PrefabInstance: {fileID: 5657932913997900548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &398896303277848994 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5407747903496278694, guid: 4933194aef112944baebe3933618b6e0, type: 3}
+  m_PrefabInstance: {fileID: 5657932913997900548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5562054144202438348 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 267232746835353032, guid: 4933194aef112944baebe3933618b6e0, type: 3}
   m_PrefabInstance: {fileID: 5657932913997900548}
   m_PrefabAsset: {fileID: 0}

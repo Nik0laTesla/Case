@@ -5,6 +5,7 @@ using RootMotion.FinalIK;
 using RootMotion.Demos;
 using UnityEngine;
 
+
 public class DriveController : MonoBehaviour
 {
     [Header("Bools")]
@@ -30,6 +31,10 @@ public class DriveController : MonoBehaviour
 
     [Header("Driver")]
     public GameObject Driver;
+
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem smokeParticle;
+    [SerializeField] private ParticleSystem boostParticle;
 
 
    [Header("WheelColliders & Settings")]
@@ -116,6 +121,8 @@ public class DriveController : MonoBehaviour
 
         else if(!isLevelStart && isLevelDone)
 		{
+            smokeParticle.Stop();
+
             RB.mass = 2500;
           
             if (RB.angularVelocity.magnitude > 0)
@@ -133,6 +140,8 @@ public class DriveController : MonoBehaviour
 
             if (isOnGround)
             {
+                smokeParticle.Play();
+
                 isRandomIndexSetted = false;
                 Driver.GetComponent<FullBodyBipedIK>().enabled = true;
                 Driver.GetComponent<Animator>().SetBool("isFlipping", false);
@@ -150,6 +159,7 @@ public class DriveController : MonoBehaviour
 
             else if (!isOnGround)
             {
+                smokeParticle.Stop();
                 isAccelerating = false;
 
                 if (RB.angularVelocity.magnitude > 0)
@@ -225,14 +235,6 @@ public class DriveController : MonoBehaviour
         }
 	}
 
-	//private void OnTriggerEnter(Collider other)
-	//{
-	//	if (other.CompareTag(TagGround))
-	//	{
- //           Driver.transform.SetParent(null);
- //           Driver.GetComponent<FullBodyBipedIK>().enabled = false;
-	//	}
-	//}
 
 	void RayCast()
     {
@@ -266,7 +268,9 @@ public class DriveController : MonoBehaviour
         {
             isBoostActive = false;
             torque = 1000;
+            boostParticle.Play();
             yield return new WaitForSeconds(flipCount);
+            boostParticle.Stop();
             torque = 750;
             flipCount = 0;
         }

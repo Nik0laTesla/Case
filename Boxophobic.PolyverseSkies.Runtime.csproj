@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{E6699CB5-0FB2-225A-046F-1ABE87B4F770}</ProjectGuid>
+    <ProjectGuid>{B5BA2102-7E5D-22C5-394D-9335EFC44214}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Boxophobic.PolyverseSkies.Runtime</AssemblyName>
@@ -56,10 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BOXOPHOBIC\Polyverse Skies\Core\Runtime\PolyverseSkies.cs" />
+    <Compile Include="Assets\Packages\BOXOPHOBIC\Polyverse Skies\Core\Runtime\PolyverseSkies.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\BOXOPHOBIC\Polyverse Skies\Core\Runtime\Boxophobic.PolyverseSkies.Runtime.asmdef" />
+    <None Include="Assets\Packages\BOXOPHOBIC\Polyverse Skies\Core\Runtime\Boxophobic.PolyverseSkies.Runtime.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -671,7 +671,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Boxophobic.Utils.Scripts.csproj">
-      <Project>{46F5226D-F671-501B-286D-0A8CB1336162}</Project>
+      <Project>{E9762928-36F6-969D-09E8-A8049208C9D7}</Project>
       <Name>Boxophobic.Utils.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
