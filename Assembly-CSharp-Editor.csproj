@@ -108,6 +108,8 @@
     <Compile Include="Assets\Packages\Plugins\RootMotion\Editor\FinalIK\RotationLimitPolygonalInspector.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\Editor\FinalIK\_DEMOS\BendGoalInspector.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\Editor\FinalIK\BipedIKSolversInspector.cs" />
+    <Compile Include="Assets\PlayerPrefsEditor\Editor\PlayerPrefsEditor.cs" />
+    <Compile Include="Assets\PlayerPrefsEditor\Editor\Mac\Plist.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -762,17 +764,17 @@
       <Project>{E9762928-36F6-969D-09E8-A8049208C9D7}</Project>
       <Name>Boxophobic.Utils.Scripts</Name>
     </ProjectReference>
-    <ProjectReference Include="Boxophobic.PolyverseSkies.Runtime.csproj">
-      <Project>{B5BA2102-7E5D-22C5-394D-9335EFC44214}</Project>
-      <Name>Boxophobic.PolyverseSkies.Runtime</Name>
+    <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
+      <Project>{83366708-4028-A6AF-144A-6FA8C1FF0B07}</Project>
+      <Name>Boxophobic.Utils.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.PolyverseSkies.Editor.csproj">
       <Project>{0B803D9C-BEA5-2C8E-146F-CCBC62757DA2}</Project>
       <Name>Boxophobic.PolyverseSkies.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
-      <Project>{83366708-4028-A6AF-144A-6FA8C1FF0B07}</Project>
-      <Name>Boxophobic.Utils.Editor</Name>
+    <ProjectReference Include="Boxophobic.PolyverseSkies.Runtime.csproj">
+      <Project>{B5BA2102-7E5D-22C5-394D-9335EFC44214}</Project>
+      <Name>Boxophobic.PolyverseSkies.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

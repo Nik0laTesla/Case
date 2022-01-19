@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.FinalIK;
+using TMPro;
 
 public class AIController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class AIController : MonoBehaviour
     [SerializeField] private bool isLanding;
     [SerializeField] private bool isFlipping;
     [SerializeField] private bool isBoostActive;
+    [SerializeField] private bool isRotationNormal;
+
 
     [SerializeField] LayerMask groundLayer;
 
@@ -20,6 +23,11 @@ public class AIController : MonoBehaviour
     [SerializeField] private ParticleSystem smoke;
     [SerializeField] private ParticleSystem boostParticle;
 
+
+    [Header("Place")]
+    public int place;
+    [SerializeField] private TextMeshPro placeText;
+    public GameObject crown;
 
     [Header("Flip Counter")]
     private Vector3 lastUp;
@@ -37,7 +45,7 @@ public class AIController : MonoBehaviour
     [Header("WheelColliders & Settings")]
     public WheelCollider[] WC;
     public GameObject[] Wheels;
-    public float torque = 600;
+    public float torque;
     [SerializeField] private float speed;
     [SerializeField] private float finalTorque;
     private Quaternion quat;
@@ -48,11 +56,9 @@ public class AIController : MonoBehaviour
     void Start()
     {
         GC = GameController.instance;
+       
         StartMethods();
-
-
-        StartCoroutine(SetRandomSpeed());
-		
+        StartCoroutine(SetRandomSpeed());	
     }
 
     private void StartMethods()
@@ -71,31 +77,31 @@ public class AIController : MonoBehaviour
         RB = gameObject.GetComponent<Rigidbody>();
     }
 
-
     // Update is called once per frame
     void FixedUpdate()
     {
         if (isLevelStart && !isLevelDone && !isLevelFail)
         {
-
             WheelRotation();
 
             if (isOnGround)
             {
                
-                if (flipCount > 0)
+                if (flipCount > 1)
                 {
                     isBoostActive = true;
                     StartCoroutine(SetBoost());
                 }
-
-            
+				else
+				{
+                    flipCount = 0;
+                }
+   
                 Move(speed);                              
             }
 
             else if (!isOnGround)
-            {
-                
+            {               
                 FlipCounter();               
             }
         }
@@ -105,18 +111,18 @@ public class AIController : MonoBehaviour
 	{
         if (isLevelStart && !isLevelDone && !isLevelFail)
         {
+            if (place == 1)
+            {
+                crown.SetActive(true);
+            }
+			else
+			{
+                crown.SetActive(false);
+			}
+
+            placeText.text = place.ToString();
+           
             RayCast();
-
-            if (isOnGround)
-            {
-                // isRandomIndexSetted = false;
-                // Driver.GetComponent<FullBodyBipedIK>().enabled = true;
-                //Driver.GetComponent<Animator>().SetBool("isFlipping", false);
-            }
-            else if (!isOnGround)
-            {
-
-            }
         }
     }
 
@@ -124,16 +130,15 @@ public class AIController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 100f,groundLayer))
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 200f,groundLayer))
         {
             if (hit.distance < 7.5f && hit.transform.CompareTag(TagGround))
             {
                 smoke.Play();
                 isLanding = false;
-                isOnGround = true;
-               // hit.distance
+                isOnGround = true;             
             }
-            else if(!isOnGround && hit.distance< 50f && hit.transform.CompareTag(TagGround))
+            else if(!isOnGround && hit.distance < 20f && hit.transform.CompareTag(TagGround))
 			{
                 isLanding = true;
 			}
@@ -169,19 +174,29 @@ public class AIController : MonoBehaviour
 
     private void FlipCounter()
     {
-        transform.RotateAround(transform.position, Vector3.right * -1, 5f);
+        if (isLanding)
+		{
+            if (!(transform.localEulerAngles.x >=340) && !(transform.localEulerAngles.x <=20))
+            {             
+                RB.angularVelocity = new Vector3(10,0,0); 
+            }
+			
+            else 
+			{
+                isRotationNormal = true;
+                RB.angularVelocity = Vector3.zero;
+            }
+        }
+
+		else
+		{
+            transform.RotateAround(transform.position, Vector3.right * -1, 7.5f);
+		}
+       
         var rotationDiffrence = Vector3.SignedAngle(transform.up, lastUp, transform.right);
         rotateAroundX += Mathf.Abs(rotationDiffrence);
         flipCount = Mathf.RoundToInt(rotateAroundX / 360);
-        lastUp = transform.up;
-		
-        if (isLanding)
-		{
-            if (!(transform.rotation.x >= -45 && transform.rotation.x <= 45))
-            {
-                transform.rotation *= new Quaternion(-20*Time.deltaTime, 0, 0, 0) ;
-            }
-		}
+        lastUp = transform.up;		
     }
     
     IEnumerator SetBoost()
@@ -189,11 +204,11 @@ public class AIController : MonoBehaviour
         if (isBoostActive)
         {
             isBoostActive = false;
-            torque = 800;
+            torque = 900;
             boostParticle.Play();
             yield return new WaitForSeconds(flipCount);
             boostParticle.Stop();
-            torque = 500;
+            torque = 650;
             flipCount = 0;
         }
     }
@@ -211,7 +226,6 @@ public class AIController : MonoBehaviour
     {
         if (collision.collider.CompareTag(TagGround))
         {
-
             if (!isLevelFail)
             {
                 gameObject.tag = "Untagged";
@@ -220,8 +234,7 @@ public class AIController : MonoBehaviour
                 Driver.GetComponent<FullBodyBipedIK>().enabled = false;
                 isLevelFail = true;
                 StartCoroutine(Respawn());
-            }
-        
+            }       
         }
     }
 
@@ -246,7 +259,6 @@ public class AIController : MonoBehaviour
             Driver.GetComponent<Animator>().enabled = false;
             yield return new WaitForEndOfFrame();
             Driver.GetComponent<Animator>().enabled = true;
-
         }
     }
 }

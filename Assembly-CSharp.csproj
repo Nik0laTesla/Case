@@ -83,6 +83,7 @@
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\Tools\ShoulderRotator.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\Baker\Scripts\GenericBaker.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\Tools\Recoil.cs" />
+    <Compile Include="Assets\Scripts\SortController.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\Posers\GenericPoser.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\_DEMOS\FBBIK\Scripts\RagdollUtilityDemo.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\_DEMOS\Biped IK\Scripts\BipedIKvsAnimatorIK.cs" />
@@ -253,6 +254,8 @@
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\_DEMOS\FBBIK\Scripts\InteractionSystemTestGUI.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\IK Solvers\IKSolverVRUtilities.cs" />
     <Compile Include="Assets\Packages\Plugins\RootMotion\FinalIK\_DEMOS\FBBIK\Scripts\PickUp2Handed.cs" />
+    <Compile Include="Assets\PlayerPrefsEditor\SimpleEncryption.cs" />
+    <Compile Include="Assets\PlayerPrefsEditor\PlayerPrefsUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -269,6 +272,7 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\PlayerPrefsEditor\README.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Packages\BOXOPHOBIC\Polyverse Skies\Core\Shaders\Simple.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
@@ -894,17 +898,17 @@
       <Project>{E9762928-36F6-969D-09E8-A8049208C9D7}</Project>
       <Name>Boxophobic.Utils.Scripts</Name>
     </ProjectReference>
-    <ProjectReference Include="Boxophobic.PolyverseSkies.Runtime.csproj">
-      <Project>{B5BA2102-7E5D-22C5-394D-9335EFC44214}</Project>
-      <Name>Boxophobic.PolyverseSkies.Runtime</Name>
+    <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
+      <Project>{83366708-4028-A6AF-144A-6FA8C1FF0B07}</Project>
+      <Name>Boxophobic.Utils.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.PolyverseSkies.Editor.csproj">
       <Project>{0B803D9C-BEA5-2C8E-146F-CCBC62757DA2}</Project>
       <Name>Boxophobic.PolyverseSkies.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
-      <Project>{83366708-4028-A6AF-144A-6FA8C1FF0B07}</Project>
-      <Name>Boxophobic.Utils.Editor</Name>
+    <ProjectReference Include="Boxophobic.PolyverseSkies.Runtime.csproj">
+      <Project>{B5BA2102-7E5D-22C5-394D-9335EFC44214}</Project>
+      <Name>Boxophobic.PolyverseSkies.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

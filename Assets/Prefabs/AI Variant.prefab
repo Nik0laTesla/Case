@@ -24,6 +24,9 @@ MonoBehaviour:
     m_Bits: 512
   smoke: {fileID: 398896303277848994}
   boostParticle: {fileID: 5562054144202438348}
+  place: 0
+  placeText: {fileID: 7807844154485822001}
+  crown: {fileID: 4688072312691256012}
   Driver: {fileID: 0}
   WC:
   - {fileID: 2306086005476463718}
@@ -165,6 +168,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7964010121825342839, guid: 4933194aef112944baebe3933618b6e0, type: 3}
   m_PrefabInstance: {fileID: 5657932913997900548}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7807844154485822001 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2512459824443767093, guid: 4933194aef112944baebe3933618b6e0, type: 3}
+  m_PrefabInstance: {fileID: 5657932913997900548}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &398896303277848994 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5407747903496278694, guid: 4933194aef112944baebe3933618b6e0, type: 3}
@@ -173,5 +187,10 @@ ParticleSystem:
 --- !u!198 &5562054144202438348 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 267232746835353032, guid: 4933194aef112944baebe3933618b6e0, type: 3}
+  m_PrefabInstance: {fileID: 5657932913997900548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4688072312691256012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1119818422442230216, guid: 4933194aef112944baebe3933618b6e0, type: 3}
   m_PrefabInstance: {fileID: 5657932913997900548}
   m_PrefabAsset: {fileID: 0}

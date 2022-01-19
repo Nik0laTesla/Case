@@ -4,6 +4,7 @@ using System.Collections;
 using RootMotion.FinalIK;
 using RootMotion.Demos;
 using UnityEngine;
+using TMPro;
 
 
 public class DriveController : MonoBehaviour
@@ -23,6 +24,7 @@ public class DriveController : MonoBehaviour
 
     [Header("Tags")]
     string TagGround;
+    string TagFinishTrigger;
 
     [Header("Flip Counter")]
     private Vector3 lastUp;
@@ -32,12 +34,16 @@ public class DriveController : MonoBehaviour
     [Header("Driver")]
     public GameObject Driver;
 
+    [Header("Place")]
+    public int place;
+    [SerializeField] private TextMeshPro placeText;
+    public GameObject crown;
+
     [Header("Particles")]
     [SerializeField] private ParticleSystem smokeParticle;
     [SerializeField] private ParticleSystem boostParticle;
 
-
-   [Header("WheelColliders & Settings")]
+    [Header("WheelColliders & Settings")]
     public WheelCollider[] WC;
     public GameObject[] Wheels;
     public float torque = 900;
@@ -47,6 +53,7 @@ public class DriveController : MonoBehaviour
     private Vector3 position;
 
     GameController GC;
+    CameraController Camera;
 
     public static DriveController instance;
 
@@ -61,6 +68,7 @@ public class DriveController : MonoBehaviour
     private void Start()
     {
         GC = GameController.instance;
+        Camera = CameraController.instance;
         StartMethods();
     }
 
@@ -73,32 +81,35 @@ public class DriveController : MonoBehaviour
     void GetTags()
     {
         TagGround = GC.TagGround;
+        TagFinishTrigger = GC.TagFinishTrigger;
     }
 
     void GetRB()
-	{
-        RB= gameObject.GetComponent<Rigidbody>();
-	}
-
-    
+    {
+        RB = gameObject.GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (isLevelStart && !isLevelDone && !isLevelFail)
         {
-
+            
             WheelRotation();
-           
+
             if (isOnGround)
             {
                 if (isAccelerating)
-                {                  
-                    if (flipCount > 0)
+                {
+                    if (flipCount > 1)
                     {
                         isBoostActive = true;
                         StartCoroutine(SetBoost());
-                    }                  
+                    }
+                    else
+                    {
+                        flipCount = 0;
+                    }
 
                     speed = Input.GetAxis("Fire1");
                     Move(speed);
@@ -112,19 +123,19 @@ public class DriveController : MonoBehaviour
             else if (!isOnGround)
             {
                 if (isFlipping)
-                {                
-                    transform.RotateAround(transform.position,Vector3.right*-1,3.5f);
+                {
+                    transform.RotateAround(transform.position, Vector3.right * -1, 3.5f);
                     FlipCounter();
                 }
             }
         }
 
-        else if(!isLevelStart && isLevelDone)
-		{
+        else if (!isLevelStart && isLevelDone)
+        {
             smokeParticle.Stop();
 
             RB.mass = 2500;
-          
+
             if (RB.angularVelocity.magnitude > 0)
             {
                 RB.angularVelocity = new Vector3(-25f, 0, 0);
@@ -136,6 +147,17 @@ public class DriveController : MonoBehaviour
     {
         if (isLevelStart && !isLevelFail && !isLevelDone)
         {
+            if (place == 1)
+            {
+                crown.SetActive(true);
+            }
+            else
+            {
+                crown.SetActive(false);
+            }
+
+            placeText.text = place.ToString();
+            
             RayCast();
 
             if (isOnGround)
@@ -151,10 +173,10 @@ public class DriveController : MonoBehaviour
                     isAccelerating = true;
                 }
 
-				else
-				{
+                else
+                {
                     isAccelerating = false;
-				}
+                }
             }
 
             else if (!isOnGround)
@@ -164,7 +186,7 @@ public class DriveController : MonoBehaviour
 
                 if (RB.angularVelocity.magnitude > 0)
                 {
-                    RB.angularVelocity = new Vector3(-0.25f, 0, 0);  //sen boþa dönem sana düzgün bi dönüþ yazýcaz 
+                    RB.angularVelocity = new Vector3(-0.25f, 0, 0); 
 
                 }
 
@@ -177,7 +199,7 @@ public class DriveController : MonoBehaviour
                     if (!isRandomIndexSetted)
                     {
                         isRandomIndexSetted = true;
-                        Driver.GetComponent<Animator>().SetInteger("randomAnimIndex", Random.Range(0, 3)); //burasý zaten button down alýyo bu AI hocam ne inputu.
+                        Driver.GetComponent<Animator>().SetInteger("randomAnimIndex", Random.Range(0, 3)); 
 
                     }
 
@@ -188,19 +210,15 @@ public class DriveController : MonoBehaviour
                 else
                 {
                     isFlipping = false;
-
-                    //isRandomIndexSetted = false;
-                    //Driver.GetComponent<FullBodyBipedIK>().enabled = true;
-                    //Driver.GetComponent<Animator>().SetBool("isFlipping",false);
                 }
             }
 
         }
     }
 
-	void Move(float acceleration)
+    void Move(float acceleration)
     {
-        acceleration = Mathf.Clamp(acceleration, -1, 1); 
+        acceleration = Mathf.Clamp(acceleration, -1, 1);
         finalTorque = acceleration * torque;
 
         for (int i = 0; i < 2; i++)
@@ -219,51 +237,60 @@ public class DriveController : MonoBehaviour
         }
     }
 
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider other)
 	{
-		if (collision.collider.CompareTag(TagGround))
+		if (other.CompareTag(TagGround))
 		{
-
-            if (collision.collider.CompareTag(TagGround))
-            {
-                gameObject.tag = "Untagged";
-                Driver.transform.SetParent(null);
-                Driver.GetComponent<Animator>().enabled = false;
-                Driver.GetComponent<FullBodyBipedIK>().enabled = false;
-                GC.LevelFailActions();
-            }
+            gameObject.tag = "Untagged";
+            Driver.transform.SetParent(null);
+            Driver.GetComponent<Animator>().enabled = false;
+            Driver.GetComponent<FullBodyBipedIK>().enabled = false;
+            GC.LevelFailActions();
         }
-	}
 
+        else if (other.CompareTag(TagFinishTrigger))
+		{
+            if(place == 1)
+			{
+                GC.LevelDoneActions();
+			}
+			
+            else
+			{
+                Camera.isLevelFinishFail = true;
+                GC.LevelFailActions();
+			}
+		}
+	}
 
 	void RayCast()
     {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.down), out hit, 7.5f))
-        {          
+        {
             if (hit.transform.CompareTag(TagGround))
             {
-                isOnGround = true;                     
+                isOnGround = true;
             }
         }
 
-		else
-		{
-            isOnGround = false;      
+        else
+        {
+            isOnGround = false;
         }
     }
 
     private void FlipCounter()
-	{
-        var rotationDiffrence = Vector3.SignedAngle(transform.up,lastUp,transform.right);
+    {
+        var rotationDiffrence = Vector3.SignedAngle(transform.up, lastUp, transform.right);
         rotateAroundX += Mathf.Abs(rotationDiffrence);
         flipCount = Mathf.RoundToInt(rotateAroundX / 360);
         lastUp = transform.up;
-	}
+    }
 
     IEnumerator SetBoost()
-	{
+    {
         if (isBoostActive)
         {
             isBoostActive = false;
@@ -274,7 +301,5 @@ public class DriveController : MonoBehaviour
             torque = 750;
             flipCount = 0;
         }
-	}
-
-   
+    }
 }

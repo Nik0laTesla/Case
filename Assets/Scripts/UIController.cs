@@ -10,7 +10,6 @@ public class UIController : MonoBehaviour
     public bool isLevelDone;
     public bool isLevelFail;
 
-
     [Header("Tap To Start Panel")]
     public GameObject TapToStartPanel;
 
@@ -27,15 +26,11 @@ public class UIController : MonoBehaviour
     [Header("Timer")]
     public Text TimerText;
     private float time;
-
-   
-   
-    
+ 
     GameController GC;
     FinishTrigger Finish;
     DriveController Drive;
     
-
     public static UIController instance;
 
     private void Awake()
@@ -104,7 +99,6 @@ public class UIController : MonoBehaviour
     {
         InGamePanel.SetActive(false);
         WinPanel.SetActive(true);
-       // StartCoroutine(WaitForWinPanel());
     }
 
     public void ShowLosePanel()
@@ -114,15 +108,9 @@ public class UIController : MonoBehaviour
 
     IEnumerator WaitForLosePanel()
     {
-        yield return new WaitForSeconds(0.2f);
+        TimerText.transform.SetParent(LosePanel.transform);
+        yield return new WaitForSeconds(0.5f);
         InGamePanel.SetActive(false);
         LosePanel.SetActive(true);
-    }
-
-    IEnumerator WaitForWinPanel()
-    {
-        yield return new WaitForSeconds(1.5f);
-        InGamePanel.SetActive(false);
-        WinPanel.SetActive(true);
     }
 }

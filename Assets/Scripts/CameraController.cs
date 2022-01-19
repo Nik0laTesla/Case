@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     public bool isLevelStart;
     public bool isLevelDone;
     public bool isLevelFail;
+    public bool isLevelFinishFail;
 
     [Header("Settings")]
     public Vector3 offset;
@@ -16,13 +17,10 @@ public class CameraController : MonoBehaviour
     private Transform Target;
     private Vector3 finalPos;
 
-
     DriveController DC;
     FinishTrigger Finish;
     
-
     public static CameraController instance;
-
 
 	private void Awake()
 	{
@@ -52,15 +50,15 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(isLevelStart && !isLevelDone && !isLevelFail)
+        if(isLevelStart && !isLevelDone && !isLevelFail && !isLevelFinishFail)
 		{
             targetPosition = Target.transform.position + offset;
 
             transform.position = Vector3.Lerp(transform.position,targetPosition,smooth);
 		}
-		else if(isLevelDone)
+		
+        else if( isLevelDone || isLevelFinishFail)
         {
-            
             transform.LookAt(Target);
             transform.position = Vector3.Lerp(transform.position,finalPos,Time.deltaTime);
 		}
