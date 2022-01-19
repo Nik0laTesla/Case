@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     public string TagFlipCounter;
     public string TagFinishTrigger;
 
-    public int level;
+    public int level = 1;
     public int randomLevelIndex;
 
     [SerializeField] private List<Transform> AllDrivers = new List<Transform>();
@@ -94,28 +94,26 @@ public class GameController : MonoBehaviour
     public void EndGameButtonAction()
     {
         if (isLevelDone)
-        {
-            if (level == SceneManager.sceneCount)
+        {      
+
+            if (PlayerPrefs.GetInt("Level") < 5)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                PlayerPrefs.SetInt("Level", (PlayerPrefs.GetInt("Level") + 1));
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
             }
+
             else
             {
+                randomLevelIndex = GetRandom();
 
-                PlayerPrefs.SetInt("Level", level + 1);
-
-                if (PlayerPrefs.GetInt("Level") != 5)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-                }
-                else
+                if (randomLevelIndex == SceneManager.GetActiveScene().buildIndex + 1 )
                 {
                     randomLevelIndex = GetRandom();
-                      SceneManager.LoadScene(randomLevelIndex);
-
                 }
-            }
+                
+                SceneManager.LoadScene(randomLevelIndex);
+            }           
         }
 
         else if (isLevelFail)

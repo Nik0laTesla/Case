@@ -221,6 +221,7 @@ MonoBehaviour:
   isLevelStart: 0
   isLevelDone: 0
   isLevelFail: 0
+  isLevelFinishFail: 0
   TagPlayer: Player
   TagGround: Ground
   TagFlipCounter: FlipCounter
@@ -1523,6 +1524,7 @@ MonoBehaviour:
   isLevelStart: 0
   isLevelDone: 0
   isLevelFail: 0
+  isLevelFinishFail: 0
   offset: {x: 15, y: 15, z: -40}
   smooth: 2
 --- !u!1001 &1003803929
@@ -1969,7 +1971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 84f893cfbd5428e4a87c7c6e9f6303a0, type: 3}
       propertyPath: m_TagString
-      value: Ground
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84f893cfbd5428e4a87c7c6e9f6303a0, type: 3}
@@ -2674,7 +2676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: -710.86}
+  m_AnchoredPosition: {x: 0.0000076293945, y: -710.87}
   m_SizeDelta: {x: 800, y: 1422.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1559699180
@@ -3707,7 +3709,7 @@ PrefabInstance:
       objectReference: {fileID: 1443098194}
     - target: {fileID: 7964010121390965417, guid: 4933194aef112944baebe3933618b6e0, type: 3}
       propertyPath: torque
-      value: 550
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 7964010121611794225, guid: 4933194aef112944baebe3933618b6e0, type: 3}
       propertyPath: m_Materials.Array.data[2]

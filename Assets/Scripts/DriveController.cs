@@ -94,22 +94,23 @@ public class DriveController : MonoBehaviour
     {
         if (isLevelStart && !isLevelDone && !isLevelFail)
         {
-            
+
             WheelRotation();
 
             if (isOnGround)
             {
+                if (flipCount > 1)
+                {
+                    isBoostActive = true;
+                    StartCoroutine(SetBoost());
+                }
+                else
+                {
+                    flipCount = 0;
+                }
+
                 if (isAccelerating)
                 {
-                    if (flipCount > 1)
-                    {
-                        isBoostActive = true;
-                        StartCoroutine(SetBoost());
-                    }
-                    else
-                    {
-                        flipCount = 0;
-                    }
 
                     speed = Input.GetAxis("Fire1");
                     Move(speed);
@@ -189,8 +190,6 @@ public class DriveController : MonoBehaviour
                     RB.angularVelocity = new Vector3(-0.25f, 0, 0); 
 
                 }
-
-
 
                 if (Input.GetMouseButton(0))
                 {
@@ -296,9 +295,9 @@ public class DriveController : MonoBehaviour
             isBoostActive = false;
             torque = 1000;
             boostParticle.Play();
-            yield return new WaitForSeconds(flipCount);
+            yield return new WaitForSeconds(flipCount * 1.5f);
             boostParticle.Stop();
-            torque = 750;
+            torque = 600;
             flipCount = 0;
         }
     }
